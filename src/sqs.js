@@ -12,18 +12,22 @@ const awsCredentials = {
     }
 }
 
-const getSqsConsumer = function (queueUrl, sqsConfig, handleMessage) {
+const getSqsConsumer = function (queueUrl, sqsConfig, handleMessageBatch) {
     const sqsConsumer = Consumer.create({
         queueUrl,
-        handleMessage,
-        sqs: new SQSClient(sqsConfig)
+        handleMessageBatch,
+        sqs: new SQSClient(sqsConfig),
+        attributeNames: ['SentTimestamp'],
+        messageAttributeNames: ['All'],
+        batchSize: 10,
+        waitTimeSeconds: 20,
+    });
+
+    sqsConsumer.on('started', () => {
+        console.info('polling started');
     });
 
     sqsConsumer.on('error', (err) => {
-        console.error(err.message);
-    });
-
-    sqsConsumer.on('processing_error', (err) => {
         console.error(err.message);
     });
 
@@ -34,10 +38,18 @@ const getSqsConsumer = function (queueUrl, sqsConfig, handleMessage) {
     return sqsConsumer;
 }
 
-async function messageHandler(message) {
-    const {Body, MessageAttributes} = message;
-    // console.log(message);
+async function batchMessageHandler(messages) {
+    // console.log(messages);
+    if (messages && messages.length) {
+        for (const message of messages) {
+            await processMessage(message);
+        }
+    }
+}
 
+async function processMessage(message) {
+    // console.log(message);
+    const {Body, MessageAttributes} = message;
     try {
         const signature = MessageAttributes?.['X-SIGNATURE']?.StringValue || '';
         const item = JSON.parse(Body);
@@ -52,7 +64,7 @@ async function messageHandler(message) {
             callee: item?.data?.callee?.phone || '',
             caller: item?.data?.caller?.phone || '',
             signature,
-            isValid: checkSignature(JSON.stringify(Body), awsCredentials.credentials.secretAccessKey, signature),
+            isValid: checkSignature(Body, awsCredentials.credentials.secretAccessKey, signature),
         }
         console.info(JSON.stringify(data));
     } catch (e) {
@@ -71,5 +83,5 @@ const checkSignature = function (body, secret, signature) {
     }
 }
 
-const sqsConsumer = getSqsConsumer(queueUrl, awsCredentials, messageHandler);
+const sqsConsumer = getSqsConsumer(queueUrl, awsCredentials, batchMessageHandler);
 sqsConsumer.start();
