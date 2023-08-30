@@ -1,9 +1,9 @@
 # Wildix Webhook integration
 
-> This demo for webhook integration with Wildix infrastructure.
-> For setup integration please read [this page](https://wildix.atlassian.net/wiki/x/AYCODg)
+> This is demo for Webhook integration with Wildix infrastructure. 
+> For setup instructions, check [this page](https://wildix.atlassian.net/wiki/x/AYCODg)
 
-Install dependencies
+Install dependencies:
 ```bash
 npm install
 ```
@@ -11,41 +11,40 @@ npm install
 ### Webhook transport
 
 In this demo, we use the `localtunnel` library to create a public URL for your local server.
-You can use another library if needed (ngrok, etc).
+You can use another library if needed (ngrok, etc.).
 
+1. Open `src/server.js` and set your unique subdomain name (random string)
 
-1 Open `src/server.js` and set your unique subdomain name (random string)
-
-2 Run webhook server
+2. Run Webhook server:
 ```bash
 npm run webhook:serve
 ```
-3 Copy & open link from console in the browser
+3. Copy & open the link from console in the browser
 
-4 Confirm your public IP: Paste your public IP to the form
+4. Confirm your public IP: paste your public IP to the form
 
-5 Go to PBX and install Webhook integration with URL from step 3
+5. Go to PBX and install Webhook integration with URL from step 3
 
-6 Copy integration secret and put to the `src/server.js`
+6. Copy integration secret and paste it to the `src/server.js`, to the following field:
 
 ```
 const secret = 'pasteCopiedSecretHere';
 ```
-7 Restart server with correct secret (step 2)
+7. Restart the server with the correct secret (step 2)
 
-8 Make calls and view logs in the server console
+8. Make calls and view logs in the server console
 
 ### AWS SQS transport
 
-1 Open file `src/sqs.js`;
+1. Open the file `src/sqs.js`;
 
-2 Set your `queueUrl` and your `AWS region & credentials`
+2. Set your `queueUrl` and your `AWS region & credentials`
 
-3 Run AWS SQS queue pooling
+3. Run AWS SQS queue pooling:
 ```bash
 npm run sqs:pool
 ```
-Make calls and view logs in the server console
+4. Make calls and view logs in the server console
 
 ## Supported event types
 
@@ -200,12 +199,12 @@ Make calls and view logs in the server console
 
 ## Security
 
-> Important: For all received events need to check `signature`
+> <span style="color:red">Important: For security reasons, we recommend to check `signature` for all received events </span>
 
-- For `webhook transport` need to read request's header `x-signature`
-- For `SQS transport` need to read `MessageAttributes.['X-SIGNATURE']`
+- For `webhook transport` you can find `signature` in the request's header `x-signature`
+- For `SQS transport` you can find `signature` in the  `MessageAttributes.['X-SIGNATURE']`
 
-Example check signature for Node Js
+### Example of checking signature for Node Js
 
 ```js
 import crypto from 'crypto';
@@ -221,7 +220,7 @@ const checkSignature = function (body, secret, signature) {
     }
 }
 
-// stringBody - raw message body as string
+// stringBody - raw message body as a string
 // secret - secret from webhook configuration
 // signature - received message signature
 
