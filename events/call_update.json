@@ -1,0 +1,49 @@
+{
+  "id": "it_w118741_1693389850.110",
+  "pbx": "221100001bab",
+  "time": 1693389850810,
+  "company": "it_w118741",
+  "type": "call:update",
+  "integrationId": "8qkmnq",
+  "data": {
+    "status": "CONNECTING",
+    "caller": {
+      "type": "LOCAL",
+      "phone": "1001",
+      "name": "admin",
+      "company": null,
+      "email": "vladimir.gorobets@wildix.com",
+      "userId": "1257510555",
+      "userExtension": "1001",
+      "userDepartment": null,
+      "groupId": "62177694",
+      "groupName": "Admin",
+      "userAgent": "Wildix Zero Distance 4.0.1 WebRTC-f2a0f5f1-6c4e-444f-b99f-a968bb5f7297",
+      "userDevice": "COLLABORATION_WEB"
+    },
+    "callee": {
+      "type": "LOCAL",
+      "phone": "10020",
+      "name": "user20",
+      "company": null,
+      "email": "vladimir.gorobets+3@wildix.com",
+      "userId": "5753746",
+      "userExtension": "10020",
+      "userDepartment": null,
+      "groupId": "874629312",
+      "groupName": "Default",
+      "userAgent": null,
+      "userDevice": null
+    },
+    "service": null,
+    "destination": "10020",
+    "trunkName": null,
+    "queueName": null,
+    "queueId": null,
+    "tags": [],
+    "flags": [],
+    "endCause": null,
+    "endCauseStr": null,
+    "endBy": null
+  }
+}
