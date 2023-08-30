@@ -1,8 +1,13 @@
 import {Consumer} from 'sqs-consumer';
 import {SQSClient} from '@aws-sdk/client-sqs';
 import crypto from 'crypto';
+import {config} from 'dotenv';
 
-const queueUrl = 'https://sqs.us-east-2.amazonaws.com/367378456882/webhook-demo';
+config();
+
+console.log(process.env);
+
+const queueUrl = process.env.SQS_URL || 'https://sqs.us-east-2.amazonaws.com/367378456882/webhook-demo';
 
 const awsCredentials = {
     region: process.env.AWS_DEFAULT_REGION || 'us-east-1',
