@@ -3,8 +3,8 @@ import localtunnel from 'localtunnel';
 import crypto from 'crypto';
 
 // need to configure this parameters
-const subdomain = 'my-subdomain-1232';
-const secret = '6j72Stykmy05zu0MeuIpFdjvVy2cGZ';
+const subdomain = 'my-subdomain-123234';
+const secret = '3xocj9iiwBxDD0f0Qi85EJaTgCQ7LY';
 
 const port = 8088;
 

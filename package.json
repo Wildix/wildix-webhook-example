@@ -5,7 +5,13 @@
   "type": "module",
   "scripts": {
     "webhook:serve": "node src/server.js",
-    "sqs:pool": "node src/sqs.js"
+    "sqs:pool": "node src/sqs.js",
+    "ngr:srv": "node srv",
+    "ngr:tunnel": "ssh -v -i ~/.ssh/gorobets-aws-edu.pem ec2-user@3.136.17.10 -R 8888:localhost:8888",
+    "ngr:srv2": "node srv2",
+    "ngr:tunnel2": "ssh -v -i ~/.ssh/gorobets-aws-edu.pem ec2-user@3.136.17.10 -R 8880:localhost:8880",
+    "php:serve": "php -S localhost:8888 test.php",
+    "ngrok": "ngrok tunnel --label edge=edghts_2V9Zfv2Txxs3CjP24NMagsrjd2z http://localhost:8888"
   },
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.398.0",
